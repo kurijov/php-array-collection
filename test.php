@@ -1,12 +1,4 @@
-Array collection
-====================
-
-Provides api to query items from array
-____________________
-
-###Example
-
-```php
+<?php
 
 require("./array.php");
 
@@ -37,5 +29,3 @@ var_dump($collection->first());
 
 # get first item by pattern
 var_dump($collection->first(array("age" => 23)));
-
-```

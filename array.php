@@ -54,10 +54,17 @@ class ArrayCollection extends myIterator
 
   public function remove($value)
   {
-    $key = array_search($value, $this->data());
-    if ($key !== false) {
-      unset($this->_data[$key]);
+    if ($value instanceof ArrayCollection) {
+      foreach ($value as $item) {
+        $this->remove($item);
+      }
+    } else {
+      $key = array_search($value, $this->data());
+      if ($key !== false) {
+        unset($this->_data[$key]);
+      }
     }
+    return $this;
   }
 
   public function where($pattern)
@@ -82,7 +89,7 @@ class ArrayCollection extends myIterator
     return $this->first(array("id" => $id));
   }
 
-  public function first($pattern)
+  public function first($pattern = false)
   {
     if ($pattern) {
       $result = $this->_first($this->where($pattern));
@@ -98,7 +105,7 @@ class ArrayCollection extends myIterator
     $data   = $this->toArray($data);
     $length = count($data);
     if ($length) {
-      return $data[0];
+      return array_shift(array_values($data));
     } else {
       return false;
     }
